@@ -1,0 +1,6 @@
+{
+  "name": "techlab-e2e",
+  "private": true,
+  "scripts": { "open": "cypress open --e2e", "test": "cypress run" },
+  "devDependencies": { "cypress": "15.1.0" }
+}

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TechLab | Agenda de oficinas</title>
+<style>
+  * { box-sizing: border-box; }
+  :root { color: #172b30; background: #f3f6f5; font: 16px system-ui, sans-serif; }
+  body { margin: 0; }
+  header { background: #102d31; color: white; }
+  .wrap { width: min(1120px, calc(100% - 2rem)); margin: auto; }
+  nav { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid #547077; }
+  nav a { color: #c9f5e3; }
+  .hero { padding: 2.8rem 0 3.8rem; }
+  h1 { font-size: clamp(2.1rem, 6vw, 4rem); letter-spacing: -.055em; margin: 0; }
+  .hero p { color: #c7dedd; }
+  main { padding-bottom: 3rem; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; margin: -1.55rem 0 2rem; }
+  .stats div, article, .panel { background: white; border: 1px solid #d5e1de; border-radius: .85rem; padding: 1.1rem; }
+  .stats strong { display: block; font-size: 1.6rem; }
+  .filters { display: flex; flex-wrap: wrap; align-items: end; gap: .8rem; margin-bottom: 1rem; }
+  .filters label:first-child { flex: 1; min-width: 13rem; }
+  .filters label:last-child { padding: .65rem 0; }
+  input, select, button { font: inherit; }
+  input:not([type=checkbox]), select { display: block; width: 100%; padding: .55rem; border: 1px solid #8da39f; border-radius: .4rem; margin-top: .25rem; }
+  button { background: #12614f; color: white; border: 0; border-radius: .45rem; padding: .58rem .8rem; cursor: pointer; }
+  button:disabled { opacity: .6; }
+  #oficinas { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 245px), 1fr)); }
+  article { display: flex; flex-direction: column; }
+  article h3 { margin: .35rem 0 0; font-size: 1.2rem; }
+  .trilha { color: #12614f; font-size: .84rem; font-weight: 700; }
+  .meta { color: #526661; font-size: .9rem; }
+  progress { width: 100%; accent-color: #12614f; }
+  article form { margin-top: auto; }
+  article button, .panel button { margin-top: .6rem; }
+  .panel { margin-top: 2rem; }
+  .panel input { max-width: 25rem; }
+  #reservas li { margin: .6rem 0; }
+  #reservas button { margin-left: .5rem; }
+  [role=status] { font-weight: 650; }
+  [role=status]:empty { display: none; }
+  @media (max-width: 540px) { .stats { gap: .35rem; font-size: .83rem; } .stats div { padding: .65rem; } }
+</style>
+<script src="/app.js" defer></script>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <nav><strong>TechLab</strong><a href="#minhas-inscricoes">Minhas inscrições</a></nav>
+    <div class="hero"><h1>Agenda de oficinas</h1><p>Explore as trilhas e reserve sua vaga nas práticas do laboratório.</p></div>
+  </div>
+</header>
+<main class="wrap">
+  <section class="stats" aria-label="Resumo">
+    <div><strong id="total-oficinas">–</strong>Oficinas</div>
+    <div><strong id="total-vagas">–</strong>Vagas disponíveis</div>
+    <div><strong id="total-inscricoes">–</strong>Inscrições</div>
+  </section>
+  <section aria-labelledby="titulo-catalogo">
+    <h2 id="titulo-catalogo">Catálogo</h2>
+    <div class="filters">
+      <label>Buscar oficina <input id="busca" type="search"></label>
+      <label>Trilha <select id="trilha"><option value="">Todas as trilhas</option><option>Infraestrutura</option><option>Engenharia</option><option>Qualidade</option></select></label>
+      <label><input id="disponiveis" type="checkbox"> Somente com vagas</label>
+    </div>
+    <p role="status"></p>
+    <div id="oficinas"></div>
+  </section>
+  <section class="panel" id="minhas-inscricoes">
+    <h2>Minhas inscrições</h2>
+    <form id="consultar">
+      <label>E-mail da inscrição <input name="email" type="email" maxlength="254" required></label>
+      <button>Consultar inscrições</button>
+    </form>
+    <p id="retorno-consulta" aria-live="polite"></p>
+    <ul id="reservas"></ul>
+  </section>
+</main>
+<template id="cartao">
+  <article>
+    <span class="trilha"></span>
+    <h3></h3>
+    <p class="meta"></p>
+    <p class="descricao"></p>
+    <label><span data-cy="vagas"></span><progress></progress></label>
+    <form>
+      <label>E-mail <input name="email" type="email" maxlength="254" required></label>
+      <button>Reservar vaga</button>
+    </form>
+  </article>
+</template>
+</body>
+</html>
